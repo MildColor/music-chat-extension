@@ -3,16 +3,18 @@
   "name": "music-chat",
   "version": "1.0",
   "description": "",
-  "action": {
-    "default_popup": "index.html"
-  },
+  "action": {},
   "permissions": ["scripting", "tabs", "activeTab"],
   "content_scripts": [
     {
-      "matches": ["*://music.youtube.com/*"],
-      "js": ["content.ts"]
+      "js": ["content.js"],
+      "matches": ["https://music.youtube.com/*"]
     }
   ],
+  "background": {
+    "service_worker": "background.js"
+  },
+
   "host_permissions": ["https://*/*", "http://*/*"],
   "icons": {}
 }
