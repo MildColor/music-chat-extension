@@ -3,6 +3,7 @@ import { Button, buttonVariants } from "../ui/button";
 
 interface PlayerButtonPropsType {
   children: React.ReactNode;
+  onClick?: () => void;
 }
 
 const PLAYER_BUTTON_ATTRIBUTE = {
@@ -10,8 +11,12 @@ const PLAYER_BUTTON_ATTRIBUTE = {
   variant: "ghost",
 } as VariantProps<typeof buttonVariants>;
 
-const PlayerButton = ({ children }: PlayerButtonPropsType) => {
-  return <Button {...PLAYER_BUTTON_ATTRIBUTE}>{children}</Button>;
+const PlayerButton = ({ children, onClick }: PlayerButtonPropsType) => {
+  return (
+    <Button {...PLAYER_BUTTON_ATTRIBUTE} onClick={onClick}>
+      {children}
+    </Button>
+  );
 };
 
 export default PlayerButton;

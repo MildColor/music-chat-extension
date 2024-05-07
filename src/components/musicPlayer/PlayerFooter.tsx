@@ -9,12 +9,17 @@ interface PlayerFooterPropsType {
 const PLAYER_BUTTON_SIZE = "h-5 w-5";
 
 const PlayerFooter = ({ isPlaying }: PlayerFooterPropsType) => {
+  const handleClickPlay = () => {
+    console.log("handleClickPlay");
+    chrome.runtime.sendMessage({ type: "toggle-play-pause" });
+  };
+
   return (
     <CardFooter className="player-buttons flex items-center justify-center p-0">
       <PlayerButton>
         <ChevronFirst className={PLAYER_BUTTON_SIZE} />
       </PlayerButton>
-      <PlayerButton>
+      <PlayerButton onClick={handleClickPlay}>
         {isPlaying ? (
           <Pause className={PLAYER_BUTTON_SIZE} />
         ) : (
