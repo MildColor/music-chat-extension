@@ -1,22 +1,29 @@
-import React from "react";
 import { CardFooter } from "../ui/card";
-import { Button } from "../ui/button";
-import { Pause, Play } from "lucide-react";
+import { ChevronFirst, ChevronLast, Pause, Play } from "lucide-react";
+import PlayerButton from "./PlayerButton";
 
 interface PlayerFooterPropsType {
   isPlaying: boolean;
 }
 
+const PLAYER_BUTTON_SIZE = "h-5 w-5";
+
 const PlayerFooter = ({ isPlaying }: PlayerFooterPropsType) => {
   return (
     <CardFooter className="player-buttons flex items-center justify-center p-0">
-      <Button size="icon" variant="ghost">
+      <PlayerButton>
+        <ChevronFirst className={PLAYER_BUTTON_SIZE} />
+      </PlayerButton>
+      <PlayerButton>
         {isPlaying ? (
-          <Pause className="h-5 w-5" />
+          <Pause className={PLAYER_BUTTON_SIZE} />
         ) : (
-          <Play className="h-5 w-5" />
+          <Play className={PLAYER_BUTTON_SIZE} />
         )}
-      </Button>
+      </PlayerButton>
+      <PlayerButton>
+        <ChevronLast className={PLAYER_BUTTON_SIZE} />
+      </PlayerButton>
     </CardFooter>
   );
 };
