@@ -14,11 +14,15 @@ const validateUrl = (url: string) => {
   return url.includes("music.youtube.com");
 };
 
-export const contentScriptStore = create<
-  contentScriptState & contentScriptActions
->()((set) => ({
-  url: "",
-  isYouTubeMusicUrl: false,
-  updateUrl: (newUrl) =>
-    set({ url: newUrl, isYouTubeMusicUrl: validateUrl(newUrl) }),
-}));
+const contentScriptStore = create<contentScriptState & contentScriptActions>()(
+  (set) => ({
+    url: "",
+    isYouTubeMusicUrl: false,
+    updateUrl: (newUrl) => {
+      set({ url: newUrl, isYouTubeMusicUrl: validateUrl(newUrl) });
+      console.log("newUrl: ", newUrl);
+    },
+  })
+);
+
+export default contentScriptStore;
