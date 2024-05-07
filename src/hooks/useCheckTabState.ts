@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-const useCheTabState = () => {
+const useCheckTabState = () => {
   const [data, setData] = useState<messageData>({});
 
   useEffect(() => {
@@ -31,4 +31,4 @@ const useCheTabState = () => {
   };
 };
 
-export default useCheTabState;
+export default useCheckTabState;
