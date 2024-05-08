@@ -2,6 +2,7 @@ import { CardFooter } from "../ui/card";
 import { ChevronFirst, ChevronLast, Pause, Play } from "lucide-react";
 import PlayerButton from "./PlayerButton";
 import { getLocalStorage } from "@/utils/localStorage";
+import { CONNECTED_ID_KEY } from "@/constant/localStorage";
 
 interface PlayerFooterPropsType {
   isPlaying: boolean;
@@ -10,7 +11,7 @@ interface PlayerFooterPropsType {
 const PLAYER_BUTTON_SIZE = "h-5 w-5";
 
 const PlayerFooter = ({ isPlaying }: PlayerFooterPropsType) => {
-  const connectedTabId = Number(getLocalStorage("connectedTabId"));
+  const connectedTabId = Number(getLocalStorage(CONNECTED_ID_KEY));
 
   const handleClickPlayToggle = () => {
     chrome.tabs.sendMessage(connectedTabId, {
