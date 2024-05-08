@@ -11,7 +11,7 @@ const PLAYER_BUTTON_SIZE = "h-5 w-5";
 const PlayerFooter = ({ isPlaying }: PlayerFooterPropsType) => {
   const handleClickPlay = () => {
     console.log("handleClickPlay");
-    chrome.runtime.sendMessage({ type: "toggle-play-pause" });
+    chrome.runtime.sendMessage({ type: "togglePlayPause" });
   };
 
   return (

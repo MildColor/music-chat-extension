@@ -1,3 +1,5 @@
+// background.ts
+
 const youtubeMusicUrl = "https://music.youtube.com";
 let popupWindow: chrome.windows.Window | undefined = undefined;
 
@@ -49,25 +51,51 @@ const sendMessageToPopup = (message: Message) => {
   });
 };
 
+let connectedTabId: number | null | undefined = null; // 연결된 탭의 ID 저장
+
 /* 브라우저에 youtube 주소를 가진 탭 Checking*/
 const checkYoutubeTab = async () => {
+  let connectTab = null;
   let hasTab = false;
-  let youtubeWindows = null;
+  let youtubeTabs = null;
+
   const allWindows = await chrome.windows.getAll({ populate: true });
 
-  // 유튜브를 포함하는 탭을 가진 창을 필터링
-  const filteredWindows = allWindows.filter((window) =>
-    window.tabs?.some((tab) => tab.url && tab.url.includes("youtube.com"))
-  );
-  hasTab = filteredWindows.length > 0;
-  youtubeWindows = filteredWindows;
+  const filteredTabs = allWindows
+    .flatMap((window) => {
+      return window.tabs;
+    })
+    .filter((tab) => {
+      return tab?.url?.includes("music.youtube");
+    });
+
+  console.log("filteredTabs: ", filteredTabs);
+
+  hasTab = filteredTabs.length > 0;
+  youtubeTabs = filteredTabs;
+  connectTab = hasTab ? filteredTabs[0] : null;
+
+  if (!connectTab) return (connectedTabId = null); // 유튜브 뮤직 탭이 없으면 ID를 null로 설정
+
+  if (!connectedTabId || connectedTabId !== connectTab.id) {
+    connectedTabId = connectTab.id;
+
+    connectedTabId &&
+      chrome.scripting.executeScript({
+        target: { tabId: connectedTabId },
+        files: ["content.js"],
+      });
+    console.log("executeScript connectedTabId: ", connectedTabId);
+  }
 
   console.log("await checkYoutubeTab", {
     hasTab,
-    windows: youtubeWindows,
+    youtubeTabs,
+    connectTab,
+    connectedTabId,
   });
 
-  return { hasTab, windows: youtubeWindows };
+  return { hasTab, youtubeTabs, connectTab };
 };
 
 /* 사용자 탭 이동시 상태 추적 */
@@ -83,7 +111,7 @@ chrome.tabs.onUpdated.addListener(async (tabId, changeInfo, tab) => {
 });
 
 /* 사용자 탭 생성시 상태 추적 */
-chrome.windows.onCreated.addListener(async () => {
+chrome.windows.onCreated.addListener(async (tab) => {
   const data = await checkYoutubeTab();
   sendMessageToPopup({ type: "checkTab", data });
 });
@@ -91,39 +119,22 @@ chrome.windows.onCreated.addListener(async () => {
 /* Legacy */
 
 /* 앱에서 보내는 메시지 Listener */
-// chrome.runtime.onMessage.addListener(
-//   (
-//     message: Message,
-//     sender: chrome.runtime.MessageSender,
-//     sendResponse: (response?: unknown) => void
-//   ): void => {
-//     console.log("message.type: ", message.type);
-//     switch (message.type) {
-//       case "openWindow":
-// 모든 창 가져오기
-// chrome.windows.getAll({ windowTypes: ["normal"] }, (windows) => {
-//   if (windows.length > 0) {
-//     // 첫 번째 'normal' 타입의 창에 새 탭을 추가
-//     chrome.tabs.create(
-//       { windowId: windows[0].id, url: message.url },
-//       (newTab) => {
-//         console.log("New tab opened in an existing window:", newTab);
-//       }
-//     );
-//   } else {
-//     // 적절한 창이 없다면 새 창을 생성
-//     chrome.windows.create({ url: message.url }, (newWindow) => {
-//       console.log(
-//         "No existing window found, new window and tab created:",
-//         newWindow
-//       );
-//     });
+chrome.runtime.onMessage.addListener(
+  (
+    message: Message,
+    sender: chrome.runtime.MessageSender,
+    sendResponse: (response?: unknown) => void
+  ): void => {
+    switch (message.type) {
+      case "togglePlayPause":
+      // console.log("toggle message.type: ", message.type);
+    }
 
-//     chrome.windows.getAll({ windowTypes: ["normal"] }, (windows) => {});
-//   }
-// });
-//     }
+    // console.log("service worker runtime message", message);
+  }
+);
 
-//     console.log("service worker runtime message", message);
-//   }
+// 유튜브를 포함하는 탭을 가진 창을 필터링
+// const filteredWindows = allWindows.filter((window) =>
+//   window.tabs?.some((tab) => tab.url && tab.url.includes("youtube.com"))
 // );

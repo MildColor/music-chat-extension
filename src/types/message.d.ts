@@ -5,6 +5,6 @@ type KeyValuePair<K, V> = {
 type messageData = KeyValuePair;
 
 interface Message {
-  type: "checkTab" | "openWindow" | "updateMusicInfo";
+  type: "checkTab" | "openWindow" | "updateMusicInfo" | "togglePlayPause";
   data?: messageData;
 }

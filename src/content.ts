@@ -1,5 +1,15 @@
 // content-script.js
 
+// Background script와의 연결 설정
+const port = chrome.runtime.connect({ name: "youtubeMusicChannel" });
+
+port.onMessage.addListener(function (msg) {
+  if (msg.disconnect) {
+    // Background script로부터 연결 해제 요청을 받으면 처리
+    port.disconnect();
+  }
+});
+
 /* Youtube Music 재생 bar html Parsing */
 const getYoutubeMusicInfo = () => {
   const ytmusicBar = document.getElementsByTagName("ytmusic-player-bar")[0];
@@ -65,7 +75,7 @@ function togglePlayPause() {
 
 // 메시지 리스너 추가하여 외부 명령 수신
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
-  console.log("message: ", message);
+  console.log("content script message: ", message);
 
   if (message.type === "toggle-play-pause") {
     togglePlayPause();

@@ -5,12 +5,7 @@
   "description": "",
   "action": {},
   "permissions": ["scripting", "tabs", "activeTab"],
-  "content_scripts": [
-    {
-      "js": ["content.js"],
-      "matches": ["https://music.youtube.com/*"]
-    }
-  ],
+  "content_scripts": [],
   "background": {
     "service_worker": "background.js"
   },

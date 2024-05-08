@@ -1,5 +1,6 @@
 const youtubeMusicUrl = "https://music.youtube.com";
 
+/* Youtube Music 탭 열기 */
 export const openYoutubeMusicTab = () => {
   chrome.windows.getAll({ windowTypes: ["normal"] }, (windows) => {
     if (windows.length > 0) {
@@ -16,3 +17,6 @@ export const openYoutubeMusicTab = () => {
     }
   });
 };
+
+/*  */
+/* Music Player 이벤트 관련 */
