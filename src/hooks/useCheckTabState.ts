@@ -1,3 +1,4 @@
+import { setLocalStorage } from "@/utils/localStorage";
 import { useEffect, useState } from "react";
 
 const useCheckTabState = () => {
@@ -11,6 +12,7 @@ const useCheckTabState = () => {
     ) => {
       switch (message.type) {
         case "checkTab":
+          setLocalStorage("connectedTabId", message.data.connectTab.id);
           setData({ ...message.data });
           sendResponse({ status: "received checkTab message" });
           console.log("checkTab message", message);

@@ -53,7 +53,7 @@ const sendMessageToPopup = (message: Message) => {
 
 let connectedTabId: number | null | undefined = null; // 연결된 탭의 ID 저장
 
-/* 브라우저에 youtube 주소를 가진 탭 Checking*/
+/* 브라우저에 youtube 주소를 가진 탭 Checking */
 const checkYoutubeTab = async () => {
   let connectTab = null;
   let hasTab = false;
@@ -75,10 +75,14 @@ const checkYoutubeTab = async () => {
   youtubeTabs = filteredTabs;
   connectTab = hasTab ? filteredTabs[0] : null;
 
-  if (!connectTab) return (connectedTabId = null); // 유튜브 뮤직 탭이 없으면 ID를 null로 설정
+  // 유튜브 뮤직 탭이 없으면 ID를 null로 설정
+  if (!connectTab) return (connectedTabId = null);
 
+  // 기존 유튜브 뮤직 탭이 없거나, 이전 아이디 연결하고자하는 connectTab.id가 다른 경우, 새로 할당한 후, content.js 삽입
   if (!connectedTabId || connectedTabId !== connectTab.id) {
     connectedTabId = connectTab.id;
+
+    // localStorage.setItem("connectedTabId", JSON.stringify(connectedTabId));
 
     connectedTabId &&
       chrome.scripting.executeScript({

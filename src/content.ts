@@ -1,15 +1,5 @@
 // content-script.js
 
-// Background script와의 연결 설정
-const port = chrome.runtime.connect({ name: "youtubeMusicChannel" });
-
-port.onMessage.addListener(function (msg) {
-  if (msg.disconnect) {
-    // Background script로부터 연결 해제 요청을 받으면 처리
-    port.disconnect();
-  }
-});
-
 /* Youtube Music 재생 bar html Parsing */
 const getYoutubeMusicInfo = () => {
   const ytmusicBar = document.getElementsByTagName("ytmusic-player-bar")[0];
@@ -64,21 +54,60 @@ window.setInterval(() => {
 }, 1000); // 1초 간격으로 정보 업데이트
 
 /* player bar control */
-function togglePlayPause() {
+const togglePlayPause = () => {
   const playPauseButton = document.querySelector(
     "tp-yt-paper-icon-button.play-pause-button"
   ) as HTMLElement;
-  if (playPauseButton) {
-    playPauseButton.click(); // 재생/일시정지 버튼 클릭
-  }
-}
 
-// 메시지 리스너 추가하여 외부 명령 수신
+  console.log("playPauseButton: ", playPauseButton);
+
+  if (!playPauseButton) return;
+
+  playPauseButton.click(); // 재생/일시정지 버튼 클릭
+};
+
+const clickNext = () => {
+  const nextButton = document.querySelector(
+    "tp-yt-paper-icon-button.next-button"
+  ) as HTMLElement;
+
+  if (!nextButton) return;
+
+  nextButton.click(); // 다음 버튼 클릭
+};
+
+const clickPrevious = () => {
+  const previousButton = document.querySelector(
+    "tp-yt-paper-icon-button.previous-button"
+  ) as HTMLElement;
+  if (!previousButton) return;
+
+  previousButton.click(); // 이전 버튼 클릭
+};
+
+// 메시지 리스너, 외부 명령 수신
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   console.log("content script message: ", message);
 
-  if (message.type === "toggle-play-pause") {
-    togglePlayPause();
-    sendResponse({ result: "success" });
+  switch (message.type) {
+    case "togglePlayPause":
+      console.log("togglePlayPause");
+      togglePlayPause();
+      sendResponse({ result: "success" });
+
+      break;
+    case "playNext":
+      console.log("playNext");
+      clickNext();
+      sendResponse({ result: "success" });
+
+      break;
+
+    case "playPrevious":
+      console.log("playPrevious");
+      clickPrevious();
+      sendResponse({ result: "success" });
+
+      break;
   }
 });
