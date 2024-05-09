@@ -20,7 +20,6 @@ const contentScriptStore = create<contentScriptState & contentScriptActions>()(
     isYouTubeMusicUrl: false,
     updateUrl: (newUrl) => {
       set({ url: newUrl, isYouTubeMusicUrl: validateUrl(newUrl) });
-      console.log("newUrl: ", newUrl);
     },
   })
 );

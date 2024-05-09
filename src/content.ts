@@ -96,20 +96,17 @@ const clickPrevious = () => {
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   switch (message.type) {
     case "togglePlayPause":
-      console.log("togglePlayPause");
       togglePlayPause();
       sendResponse({ result: "success" });
 
       break;
     case "playNext":
-      console.log("playNext");
       clickNext();
       sendResponse({ result: "success" });
 
       break;
 
     case "playPrevious":
-      console.log("playPrevious");
       clickPrevious();
       sendResponse({ result: "success" });
 

@@ -72,9 +72,6 @@ const ChatRoom = () => {
     sendMessage();
   };
 
-  useEffect(() => {
-    console.log("messages", messages);
-  }, [messages]);
   return (
     <>
       {musicInfo?.isVisibility && (
