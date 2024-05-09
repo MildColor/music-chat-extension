@@ -7,7 +7,7 @@ type userType = "me" | "other";
 
 const getTypeClassName = (type: userType) => {
   const baseClass =
-    "flex w-max max-w-[75%] flex-col gap-2 rounded-lg px-3 py-2 text-sm";
+    "flex w-max max-w-[75%] flex-col gap-2 rounded-lg px-3 py-2 text-sm text-wrap";
 
   switch (type) {
     case "other":
@@ -31,7 +31,14 @@ const ChatTextBox = ({ user, text }: ChatTextBoxProps) => {
   {
     const type = getUserType(user);
 
-    return <div className={`${getTypeClassName(type)}`}>{text}</div>;
+    return (
+      <div
+        className={`${getTypeClassName(type)}`}
+        style={{ overflowWrap: "break-word" }}
+      >
+        {text}
+      </div>
+    );
   }
 };
 

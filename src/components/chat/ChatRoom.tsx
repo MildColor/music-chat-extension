@@ -8,6 +8,7 @@ import { getLocalStorage } from "@/utils/localStorage";
 import { CONNECTED_ID_KEY } from "@/constant/localStorage";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
+import useScrollBottom from "@/hooks/useScrollBottom";
 
 const ENDPOINT = import.meta.env.VITE_BASE_URL;
 
@@ -15,12 +16,17 @@ let socket: Socket<DefaultEventsMap, DefaultEventsMap>;
 
 const ChatRoom = () => {
   const { data: musicInfo } = useGetMusicInfo();
+  const { scrollToBottom, bottomRef } = useScrollBottom();
 
   const [users, setUsers] = useState("");
   const [message, setMessage] = useState<string>("");
   const [messages, setMessages] = useState<ChatMessageType[]>([]);
 
   useEffect(() => {
+    if (socket) {
+      socket.disconnect();
+    }
+
     socket = io(ENDPOINT);
 
     const { title, artist } = musicInfo;
@@ -57,6 +63,12 @@ const ChatRoom = () => {
     };
   }, [musicInfo.artist, musicInfo.title]);
 
+  useEffect(() => {
+    if (messages.length > 0) {
+      scrollToBottom();
+    }
+  }, [messages, scrollToBottom]);
+
   const sendMessage = () => {
     if (message) {
       socket.emit("sendMessage", message, () => setMessage(""));
@@ -70,6 +82,7 @@ const ChatRoom = () => {
   const handleOnSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     sendMessage();
+    scrollToBottom();
   };
 
   return (
@@ -84,6 +97,7 @@ const ChatRoom = () => {
                 </>
               );
             })}
+            <div ref={bottomRef}></div>
           </ChatLayout>
           <form
             className="flex w-full max-w-sm items-center space-x-2 my-3"

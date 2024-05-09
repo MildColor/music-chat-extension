@@ -56,6 +56,9 @@ const getYoutubeMusicInfo = () => {
 // 데이터를 주기적으로 업데이트하고 background script로 전송
 window.setInterval(() => {
   const musicInfo = getYoutubeMusicInfo();
+
+  if (!musicInfo.artist || !musicInfo.title) return;
+
   chrome.runtime.sendMessage({
     type: "updateMusicInfo",
     data: musicInfo,

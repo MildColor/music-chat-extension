@@ -17,6 +17,3 @@ export const openYoutubeMusicTab = () => {
     }
   });
 };
-
-/*  */
-/* Music Player 이벤트 관련 */

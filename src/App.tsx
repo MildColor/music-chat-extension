@@ -9,8 +9,6 @@ import ChatRoom from "./components/chat/ChatRoom";
 import MusicPlayer from "./components/musicPlayer/MusicPlayer";
 import { openYoutubeMusicTab } from "./utils/chrome";
 
-const youtubeMusicUrl = "https://music.youtube.com";
-
 function App() {
   const { data: tabState } = useCheTabState();
 
