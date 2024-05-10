@@ -20,9 +20,8 @@ const getPositionClass = (type: userType) => {
   }
 };
 
-const getTypeClass = (type: userType) => {
+const getTextBoxClass = (type: userType) => {
   const baseClass = "gap-2 rounded-lg px-3 py-2 text-sm text-wrap";
-
   const position = getPositionClass(type);
 
   switch (type) {
@@ -37,6 +36,13 @@ const getTypeClass = (type: userType) => {
   }
 };
 
+const getNickNameClass = (type: userType) => {
+  const baseClass = "py-1 text-xs leading-snug text-muted-foreground";
+  const position = getPositionClass(type);
+
+  return baseClass + " " + position;
+};
+
 const ChatTextBox = ({ user, text, nickname }: ChatTextBoxProps) => {
   const nameId = getLocalStorage(CONNECTED_ID_KEY);
 
@@ -49,15 +55,9 @@ const ChatTextBox = ({ user, text, nickname }: ChatTextBoxProps) => {
 
     return (
       <div>
-        <span
-          className={`${getPositionClass(
-            type
-          )} py-1 text-xs leading-snug text-muted-foreground`}
-        >
-          {nickname}
-        </span>
+        <span className={`${getNickNameClass(type)}`}>{nickname}</span>
         <div
-          className={`${getTypeClass(type)}`}
+          className={`${getTextBoxClass(type)}`}
           style={{ overflowWrap: "break-word" }}
         >
           {text}
