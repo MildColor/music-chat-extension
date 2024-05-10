@@ -23,9 +23,8 @@ const ChatRoom = () => {
   const [messages, setMessages] = useState<ChatMessageType[]>([]);
 
   useEffect(() => {
-    if (socket) {
-      socket.disconnect();
-    }
+    // 다른 방으로 join 되기전 연결되어 있는 socket이 있다면 disconnect
+    if (socket) socket.disconnect();
 
     socket = io(ENDPOINT);
 
@@ -47,6 +46,7 @@ const ChatRoom = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [musicInfo.artist, musicInfo.title]);
 
+  /* message 와 roomData listen */
   useEffect(() => {
     socket.on("message", (message) => {
       setMessages((messages) => [...messages, message]);
