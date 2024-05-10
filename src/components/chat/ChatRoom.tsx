@@ -9,6 +9,7 @@ import { CONNECTED_ID_KEY } from "@/constant/localStorage";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import useScrollBottom from "@/hooks/useScrollBottom";
+import { UsersRound } from "lucide-react";
 
 const ENDPOINT = import.meta.env.VITE_BASE_URL;
 
@@ -18,7 +19,7 @@ const ChatRoom = () => {
   const { data: musicInfo } = useGetMusicInfo();
   const { scrollToBottom, bottomRef } = useScrollBottom();
 
-  const [users, setUsers] = useState("");
+  const [users, setUsers] = useState([]);
   const [message, setMessage] = useState<string>("");
   const [messages, setMessages] = useState<ChatMessageType[]>([]);
 
@@ -54,6 +55,7 @@ const ChatRoom = () => {
 
     socket.on("roomData", ({ users }) => {
       setUsers(users);
+      console.log("users: ", users);
     });
 
     // 이벤트 리스너 정리
@@ -90,6 +92,10 @@ const ChatRoom = () => {
       {musicInfo?.isVisibility && (
         <>
           <ChatLayout>
+            <div className="flex justify-end items-center gap-1 absolute right-0 top-0 bg-background w-full p-1">
+              {users.length}
+              <UsersRound className="h-3 w-3" />
+            </div>
             {messages.map((message) => {
               return (
                 <>
