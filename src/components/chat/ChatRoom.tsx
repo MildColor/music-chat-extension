@@ -69,7 +69,8 @@ const ChatRoom = () => {
     if (messages.length > 0) {
       scrollToBottom();
     }
-  }, [messages, scrollToBottom]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [messages]);
 
   const sendMessage = () => {
     if (message) {
