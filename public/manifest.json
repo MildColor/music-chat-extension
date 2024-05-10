@@ -3,7 +3,9 @@
   "name": "music-chat",
   "version": "1.0",
   "description": "",
-  "action": {},
+  "action": {
+    "default_icon": "images/logo.png"
+  },
   "permissions": ["scripting", "tabs", "activeTab"],
   "content_scripts": [],
   "background": {
