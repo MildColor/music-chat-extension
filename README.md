@@ -11,6 +11,8 @@
 유튜브로 음악을 듣는 사람들도 많은데, 왓챠 파티처럼 유튜브 뮤직으로 함께 좋아하는 노래들의 감상을 나눌 수 있으면 좋겠다고 생각하여 만들게 되었다. 
 
 </aside>
+<br/>
+<br/>
 
 ### 설치 및 실행 방법
 
@@ -26,13 +28,16 @@
     
     1. 확장 프로그램 로드
         1. chrome://extensions/ 으로 이동 ( extension 관리 페이지)
-        2. 프로젝트에서 빌드된 dist 파일 선택 
-        
-        ![Untitled](ReadMe%2036a59deb4a854de1a1467607f7ed7d12/Untitled.png)
-        
+        2. 프로젝트에서 빌드된 dist 파일 선택
+          <img width=600px src=https://github.com/MildColor/TodoList-Refactoring/assets/96479626/95a5e6c7-3125-40a9-9e6a-aa22817cad7b>
+
 - **압축된 dist 파일 로드**
     1. dist.zip 다운로드
     2. 위의 직접 프로젝트 파일 빌드 → 2번 확장 프로그램 로드 
+
+
+<br/>
+<br/>
 
 ### **프로젝트 구현기능**
 
@@ -61,6 +66,9 @@
 1. [socket.io](http://socket.io) 를 이용한 실시간 통신 구현
 2. 무작위 닉네임 생성
 
+<br/>
+<br/>
+
 ### 기술 스택 ( 선정 이유 )
 
 - React + Vite + Chrome Extension
@@ -88,3 +96,15 @@
 
 - AWS EC2
     - 해당 서비스에 익숙하여 빠르게 서버 배포 가능
+
+
+<br/>
+<br/>
+
+### 실제 동작 화면 
+<img width=600px src=https://user-images.githubusercontent.com/96479626/232207825-886f9072-abae-45bb-ac04-0503a7b8d7e7.gif>
+
+
+
+
+
