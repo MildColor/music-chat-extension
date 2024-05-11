@@ -102,7 +102,7 @@
 <br/>
 
 ### 실제 동작 화면 
-<img width=600px src=https://user-images.githubusercontent.com/96479626/232207825-886f9072-abae-45bb-ac04-0503a7b8d7e7.gif>
+<img width=600px src=https://github.com/MildColor/TodoList-Refactoring/assets/96479626/17475149-963e-4187-9071-b746d6f21125>
 
 
 
