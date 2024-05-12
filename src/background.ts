@@ -9,8 +9,8 @@ const createPopupWindow = () => {
     {
       url: chrome.runtime.getURL("index.html"),
       type: "popup",
-      width: 200,
-      height: 400,
+      width: 600,
+      height: 1000,
     },
     (window) => {
       popupWindow = window;

@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
-  "name": "music-chat",
+  "name": "UMEW Chat",
   "version": "1.0",
-  "description": "",
+  "description": "youtube music chat extension",
   "action": {
     "default_icon": "images/logo.png"
   },
