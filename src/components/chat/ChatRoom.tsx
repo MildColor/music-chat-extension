@@ -1,4 +1,4 @@
-import React, { ChangeEvent, FormEvent, useEffect, useState } from "react";
+import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import ChatLayout from "./ChatLayout";
 import ChatTextBox from "./ChatTextBox";
 import useGetMusicInfo from "@/hooks/useGetMusicInfo";
@@ -9,6 +9,7 @@ import { CONNECTED_ID_KEY } from "@/constant/localStorage";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import useScrollBottom from "@/hooks/useScrollBottom";
+import { UsersRound } from "lucide-react";
 
 const ENDPOINT = import.meta.env.VITE_BASE_URL;
 
@@ -18,14 +19,13 @@ const ChatRoom = () => {
   const { data: musicInfo } = useGetMusicInfo();
   const { scrollToBottom, bottomRef } = useScrollBottom();
 
-  const [users, setUsers] = useState("");
+  const [users, setUsers] = useState([]);
   const [message, setMessage] = useState<string>("");
   const [messages, setMessages] = useState<ChatMessageType[]>([]);
 
   useEffect(() => {
-    if (socket) {
-      socket.disconnect();
-    }
+    // 다른 방으로 join 되기전 연결되어 있는 socket이 있다면 disconnect
+    if (socket) socket.disconnect();
 
     socket = io(ENDPOINT);
 
@@ -47,6 +47,7 @@ const ChatRoom = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [musicInfo.artist, musicInfo.title]);
 
+  /* message 와 roomData listen */
   useEffect(() => {
     socket.on("message", (message) => {
       setMessages((messages) => [...messages, message]);
@@ -54,6 +55,7 @@ const ChatRoom = () => {
 
     socket.on("roomData", ({ users }) => {
       setUsers(users);
+      console.log("users: ", users);
     });
 
     // 이벤트 리스너 정리
@@ -67,7 +69,8 @@ const ChatRoom = () => {
     if (messages.length > 0) {
       scrollToBottom();
     }
-  }, [messages, scrollToBottom]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [messages]);
 
   const sendMessage = () => {
     if (message) {
@@ -90,6 +93,10 @@ const ChatRoom = () => {
       {musicInfo?.isVisibility && (
         <>
           <ChatLayout>
+            <div className="flex justify-end items-center gap-1 absolute right-0 top-0 bg-background w-full p-1">
+              {users.length}
+              <UsersRound className="h-3 w-3" />
+            </div>
             {messages.map((message) => {
               return (
                 <>

@@ -7,7 +7,7 @@ const MusicPlayer = () => {
   const { data: musicInfo } = useGetMusicInfo();
   return (
     <>
-      <Card className="music-player felx flex-col items-center justify-center mb-4">
+      <Card className="music-player felx flex-col items-center justify-center">
         {musicInfo?.isVisibility && (
           <>
             <PlayerContent {...musicInfo} />
