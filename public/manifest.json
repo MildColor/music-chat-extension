@@ -1,18 +1,17 @@
 {
   "manifest_version": 3,
-  "name": "music-chat",
+  "name": "UMEW Chat",
   "version": "1.0",
-  "description": "",
+  "description": "youtube music chat extension",
   "action": {
-    "default_popup": "index.html"
+    "default_icon": "images/logo.png"
   },
   "permissions": ["scripting", "tabs", "activeTab"],
-  "content_scripts": [
-    {
-      "matches": ["*://music.youtube.com/*"],
-      "js": ["content.ts"]
-    }
-  ],
+  "content_scripts": [],
+  "background": {
+    "service_worker": "background.js"
+  },
+
   "host_permissions": ["https://*/*", "http://*/*"],
   "icons": {}
 }

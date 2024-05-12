@@ -8,7 +8,7 @@ interface HeaderMainProps {
 const HeaderMain = ({ children }: HeaderMainProps) => {
   return (
     <div className="flex items-center justify-between">
-      <h1 className="w-auto py-4 text-4xl font-bold">Music</h1>
+      <h1 className="w-auto py-4 text-4xl font-bold">UMEW Chat</h1>
       <ThemeToggle />
     </div>
   );

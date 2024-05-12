@@ -1,0 +1,1 @@
+export const CONNECTED_ID_KEY = "CONNECTED_ID_KEY";

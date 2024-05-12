@@ -1,10 +1,12 @@
-import ChatTextBox from "./ChatTextBox";
+interface ChatLayoutProps {
+  children?: React.ReactNode;
+}
 
-const ChatLayout = () => {
+const ChatLayout = ({ children }: ChatLayoutProps) => {
   return (
-    <div className="pb-6 pt-0">
-      <div className="space-y-4 w-auto h-96 overflow-auto">
-        <ChatTextBox type="me" text="hi" />
+    <div className="flex flex-1 pb-6 pt-0 overflow-y-auto relative">
+      <div className="space-y-4 w-full h-auto overflow-y-auto box-border">
+        {children}
       </div>
     </div>
   );
